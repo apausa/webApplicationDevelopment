@@ -1,4 +1,4 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Particle Physics Simulation Dashboard
 
 ## Note
 
@@ -7,7 +7,13 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
-First, generate build:
+First, install dependencies
+
+```bash
+npm install
+```
+
+Then, generate build:
 
 ```bash
 npm run build
