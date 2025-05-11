@@ -1,5 +1,9 @@
 import {
-  Accordion, AccordionItem, Button, Input, Textarea,
+  Accordion,
+  AccordionItem,
+  Button,
+  Input,
+  Textarea,
 } from '@nextui-org/react';
 import React, { useCallback } from 'react';
 import Link from 'next/link';
@@ -52,8 +56,17 @@ export default function SimulationTab(
 
   return (
     <>
-      <Button
+      <Input
         className="mb-2"
+        type="text"
+        color="default"
+        label="Status"
+        isReadOnly
+        value={scriptStatus}
+        variant="bordered"
+      />
+      <Button
+        className="my-2"
         color={getStatusColor(scriptStatus)}
         isDisabled={scriptStatus === 'Running'}
         isLoading={scriptStatus === 'Running'}

@@ -3,13 +3,13 @@ import { ChildProcess, spawn } from 'child_process';
 
 // Types
 import { Simulation } from '@/_private/types/lib/simulationTypes';
-import { ApptainerPath, LocalRunArgs, PutSimulation } from '@/_private/types/api';
+import { LocalRunArgs, PutSimulation } from '@/_private/types/api';
 
 // Utils
 import { createFile, getLocalArgs, getSegment } from '@/_private/utils/api';
 
 // Constants
-const APPTAINER_PATH: ApptainerPath = '/cvmfs/alice.cern.ch/containers/bin/apptainer/current/bin/apptainer';
+import { APPTAINER_PATH, SCRIPTS_PATH } from '@/_private/lib/constants/apiConstants';
 
 export async function PUT(request: Request): Promise<PutSimulation> {
   const unresolvedSimulation: Simulation = await request.json();
@@ -17,7 +17,9 @@ export async function PUT(request: Request): Promise<PutSimulation> {
 
   try {
     // Creates script
-    const segment: string = getSegment(process.env.SCRIPTS_DIRECTORY_PATH!, id);
+    const absolutePath: string = getSegment(process.cwd(), SCRIPTS_PATH);
+    const segment: string = getSegment(absolutePath, id);
+
     await createFile(segment, localRunWorkflow);
 
     // Runs script

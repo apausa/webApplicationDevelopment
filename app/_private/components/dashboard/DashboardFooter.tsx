@@ -43,7 +43,7 @@ export default function DashboardFooter({
         isDisabled={table.page.current === 1}
         onPress={onPreviousPage}
       >
-        ←
+        Back
       </Button>
       <Pagination
         isCompact
@@ -57,7 +57,7 @@ export default function DashboardFooter({
         isDisabled={table.page.current === pages}
         onPress={onNextPage}
       >
-        →
+        Next
       </Button>
     </footer>
   );

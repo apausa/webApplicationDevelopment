@@ -10,6 +10,10 @@ export type ApiSimulation = '/api/simulation/';
 
 // Other
 
+export type ScriptsPath = 'configuredMethods';
+
+export type SubmitPath = 'app/_private/utils/submit.sh';
+
 export type ApptainerPath = '/cvmfs/alice.cern.ch/containers/bin/apptainer/current/bin/apptainer';
 
 export type PostSimulation = NextResponse<Simulation | unknown>;

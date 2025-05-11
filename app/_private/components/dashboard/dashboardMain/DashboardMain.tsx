@@ -1,8 +1,12 @@
-import React, {
-  useMemo, useCallback,
-} from 'react';
+import React, { useMemo, useCallback } from 'react';
 import {
-  Table, TableHeader, TableRow, TableCell, TableBody, TableColumn, SortDescriptor,
+  Table,
+  TableHeader,
+  TableRow,
+  TableCell,
+  TableBody,
+  TableColumn,
+  SortDescriptor,
 } from '@nextui-org/react';
 import Link from 'next/link';
 
@@ -65,7 +69,7 @@ export default function DashboardMain(
           <TableColumn key={key} allowsSorting={allowSorting}>{key}</TableColumn>
         )}
       </TableHeader>
-      <TableBody emptyContent="No jobs to display" items={currentPageItems}>
+      <TableBody emptyContent="Click on 'Configure' to create a simulation" items={currentPageItems}>
         {(simulation: Simulation) => (
           <TableRow>
             {(columnKey) => (

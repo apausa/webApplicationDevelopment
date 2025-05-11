@@ -1,7 +1,10 @@
 'use client';
 
 import React, {
-  useCallback, useEffect, useReducer, useState,
+  useCallback,
+  useEffect,
+  useReducer,
+  useState,
 } from 'react';
 import { Button, Spinner } from '@nextui-org/react';
 import Link from 'next/link';
@@ -53,9 +56,24 @@ export default function ConfigurationPage() {
           as={Link}
           variant="light"
         >
-          ←
+          Back
         </Button>
         <div className="pt-2">Job configuration</div>
+        <Button className="invisible" />
+      </header>
+      <main className="px-4 py-2 mb-auto overflow-auto">
+        {loading
+          ? <Spinner className="flex justify-center" />
+          : <ConfigurationMain form={form} dispatchForm={dispatchForm} />}
+      </main>
+      <footer className="p-4 border-t border-t-neutral-800 flex justify-between">
+        <Button
+          onClick={onReset}
+          variant="light"
+          isDisabled={loading}
+        >
+          Reset
+        </Button>
         <Button
           href="/"
           as={Link}
@@ -64,20 +82,6 @@ export default function ConfigurationPage() {
           isDisabled={loading}
         >
           Stage
-        </Button>
-      </header>
-      <main className="px-4 py-2 mb-auto overflow-auto">
-        {loading
-          ? <Spinner className="flex justify-center" />
-          : <ConfigurationMain form={form} dispatchForm={dispatchForm} />}
-      </main>
-      <footer className="p-4 border-t border-t-neutral-800">
-        <Button
-          onClick={onReset}
-          variant="light"
-          isDisabled={loading}
-        >
-          Reset
         </Button>
       </footer>
     </>

@@ -2,10 +2,19 @@
 
 import {
   Button,
-  Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Spinner, useDisclosure,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  Spinner,
+  useDisclosure,
 } from '@nextui-org/react';
 import React, {
-  useCallback, useReducer, useEffect, useState,
+  useCallback,
+  useReducer,
+  useEffect,
+  useState,
 } from 'react';
 import { notFound, usePathname, useRouter } from 'next/navigation';
 
@@ -68,7 +77,7 @@ export default function ConfigurationModal() {
       scrollBehavior="inside"
       onClose={handleClose}
       isDismissable={false}
-      backdrop="opaque"
+      backdrop="blur"
     >
       <ModalContent>
         <ModalHeader className="border-b border-b-neutral-800">

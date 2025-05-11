@@ -10,17 +10,23 @@ import { Form } from '@/_private/types/lib/formTypes';
 import { PostSimulation } from '@/_private/types/api';
 
 // Utils
-import { getCurrentDate, getScript, getSelectedVersion } from '@/_private/utils/pages';
+import {
+  formatCurrentDate, formatCurrentTime, getScript, getSelectedVersion,
+} from '@/_private/utils/pages';
 import {
   getGridRunWorkflowBody, getLocalCreateWorkflowBody, getLocalRunWorkflowBody, getSegment,
 } from '@/_private/utils/api';
+
+// Constants
+import { SCRIPTS_PATH } from '@/_private/lib/constants/apiConstants';
 
 export async function POST(request: Request): Promise<PostSimulation> {
   const form: Form = await request.json();
 
   try {
+    const currentDate: Date = new Date();
     const id: string = uuidv4();
-    const segment: string = getSegment(process.env.SCRIPTS_DIRECTORY_PATH!, id);
+    const segment: string = getSegment(SCRIPTS_PATH, id);
     const version: string = getSelectedVersion(form.version);
     const script: string = (form.advanced && form.script !== null)
       ? form.script
@@ -28,8 +34,8 @@ export async function POST(request: Request): Promise<PostSimulation> {
 
     return NextResponse.json({
       id,
-      date: getCurrentDate(),
-      form: { ...form, script, title: form.title || id },
+      date: `${formatCurrentDate(currentDate)} • ${formatCurrentTime(currentDate)}`,
+      form: { ...form, script, title: form.title || `Simulation created on ${formatCurrentDate(currentDate)} at ${formatCurrentTime(currentDate)}` },
       scripts: {
         localCreateWorkflow: {
           scriptPath: path.join(segment, 'localCreateWorkflow.sh'),
@@ -63,7 +69,7 @@ export async function DELETE(request: Request): Promise<PostSimulation> {
   const id: string = await request.json();
 
   try {
-    const segment: string = getSegment(process.env.SCRIPTS_DIRECTORY_PATH!, id);
+    const segment: string = getSegment(SCRIPTS_PATH, id);
 
     try {
       await fs.access(segment);

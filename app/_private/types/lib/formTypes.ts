@@ -2,28 +2,6 @@
 
 // CONSTANT
 
-export type Form = {
-  title: string,
-  version: string,
-  subjobs: string,
-  script: string,
-  advanced: boolean
-  createWorkflow: CreateWorkflow
-  runWorkflow: RunWorkflow,
-};
-
-export type CreateWorkflow = {
-  name: '${O2DPG_ROOT}/MC/bin/o2dpg_sim_workflow.py',
-  args: Arg[];
-};
-
-export type RunWorkflow = {
-  name: '${O2DPG_ROOT}/MC/bin/o2_dpg_workflow_runner.py',
-  args: Arg[];
-};
-
-export type Arg = NumberArg | BooleanArg | StringArg;
-
 export type NumberArg = {
   name: string,
   input: { type: 'number' },
@@ -49,6 +27,28 @@ export type StringArg = {
   value: string,
   selected: boolean,
   disabled: boolean,
+};
+
+export type Arg = NumberArg | BooleanArg | StringArg;
+
+export type CreateWorkflow = {
+  name: '${O2DPG_ROOT}/MC/bin/o2dpg_sim_workflow.py',
+  args: Arg[];
+};
+
+export type RunWorkflow = {
+  name: '${O2DPG_ROOT}/MC/bin/o2_dpg_workflow_runner.py',
+  args: Arg[];
+};
+
+export type Form = {
+  title: string,
+  version: string,
+  subjobs: string,
+  script: string,
+  advanced: boolean
+  createWorkflow: CreateWorkflow
+  runWorkflow: RunWorkflow,
 };
 
 // REDUCER
