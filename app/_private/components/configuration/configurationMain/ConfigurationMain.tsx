@@ -1,6 +1,4 @@
-import {
-  Input, Tab, Tabs,
-} from '@nextui-org/react';
+import { Input, Tab, Tabs } from '@nextui-org/react';
 import React, { Key, useCallback } from 'react';
 
 // Components

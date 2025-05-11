@@ -2,7 +2,10 @@
 
 import { Button, Spinner } from '@nextui-org/react';
 import React, {
-  useEffect, useMemo, useReducer, useState,
+  useEffect,
+  useMemo,
+  useReducer,
+  useState,
 } from 'react';
 import { notFound, useRouter } from 'next/navigation';
 import Link from 'next/link';
@@ -11,7 +14,6 @@ import Link from 'next/link';
 import DetailsMain from '@/_private/components/details/detailsMain/DetailsMain';
 import DeleteButton from '@/_private/components/details/detailsFooter/DeleteButton';
 import RecreateButton from '@/_private/components/details/detailsFooter/RecreateButton';
-import CopyButton from '@/_private/components/details/detailsFooter/CopyButton';
 
 // Types
 import { Simulation } from '@/_private/types/lib/simulationTypes';
@@ -59,7 +61,7 @@ export default function DetailsPage(
           variant="light"
           as={Link}
         >
-          ←
+          Back
         </Button>
         <div className="pt-2">Job details</div>
         <Button className="invisible" />
@@ -88,7 +90,6 @@ export default function DetailsPage(
                 dispatchSimulation={dispatchSimulation}
                 setDeleted={setDeleted}
               />
-              <CopyButton />
               <RecreateButton
                 selectedSimulation={selectedSimulation as Simulation}
                 isOpen={false}

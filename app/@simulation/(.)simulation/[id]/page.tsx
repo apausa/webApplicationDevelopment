@@ -1,17 +1,26 @@
 'use client';
 
 import {
-  Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Spinner, useDisclosure,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  Spinner,
+  useDisclosure,
 } from '@nextui-org/react';
 import { notFound, usePathname, useRouter } from 'next/navigation';
 import React, {
-  useCallback, useEffect, useMemo, useReducer, useState,
+  useCallback,
+  useEffect,
+  useMemo,
+  useReducer,
+  useState,
 } from 'react';
 
 // Components
 import DetailsMain from '@/_private/components/details/detailsMain/DetailsMain';
 import DeleteButton from '@/_private/components/details/detailsFooter/DeleteButton';
-import CopyButton from '@/_private/components/details/detailsFooter/CopyButton';
 import RecreateButton from '@/_private/components/details/detailsFooter/RecreateButton';
 
 // Types
@@ -71,7 +80,8 @@ export default function DetailsModal(
       size="2xl"
       scrollBehavior="inside"
       onClose={handleClose}
-      backdrop="opaque"
+      isDismissable={false}
+      backdrop="blur"
     >
       <ModalContent>
         <ModalHeader className="border-b border-b-neutral-800">
@@ -103,7 +113,6 @@ export default function DetailsModal(
                   dispatchSimulation={dispatchSimulation}
                   setDeleted={setDeleted}
                 />
-                <CopyButton />
                 <RecreateButton
                   selectedSimulation={selectedSimulation as Simulation}
                   isOpen={isOpen}

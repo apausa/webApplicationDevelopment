@@ -32,13 +32,17 @@ export const getLatestVersion = (): string => {
   return `${year}-${month}-${day}`;
 };
 
-export const getCurrentDate = (): string => {
-  const currentDate: Date = new Date();
-  const year: string = String(currentDate.getFullYear());
-  const month: string = String(currentDate.getMonth() + 1).padStart(2, '0');
-  const day: string = String(currentDate.getDate()).padStart(2, '0');
-  const hours: string = String(currentDate.getHours()).padStart(2, '0');
-  const minutes: string = String(currentDate.getMinutes()).padStart(2, '0');
+export const formatCurrentDate = (date: Date): string => {
+  const year: string = String(date.getFullYear());
+  const month: string = String(date.getMonth() + 1).padStart(2, '0');
+  const day: string = String(date.getDate()).padStart(2, '0');
 
-  return `${day}/${month}/${year} • ${hours}:${minutes}`;
+  return `${day}/${month}/${year}`;
+};
+
+export const formatCurrentTime = (date: Date): string => {
+  const hours: string = String(date.getHours()).padStart(2, '0');
+  const minutes: string = String(date.getMinutes()).padStart(2, '0');
+
+  return `${hours}:${minutes}`;
 };

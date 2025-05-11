@@ -4,7 +4,11 @@
 
 import React, {
   useCallback,
-  useEffect, useMemo, useReducer, useRef, useState,
+  useEffect,
+  useMemo,
+  useReducer,
+  useRef,
+  useState,
 } from 'react';
 import { notFound, useRouter } from 'next/navigation';
 import { graphviz } from 'd3-graphviz';
@@ -19,7 +23,6 @@ import simulationActionCreators from '@/_private/lib/actions/simulationActions';
 // Reducers
 import simulationReducer from '@/_private/lib/reducers/simulationReducer';
 import DeleteButton from '@/_private/components/details/detailsFooter/DeleteButton';
-import CopyButton from '@/_private/components/details/detailsFooter/CopyButton';
 import RecreateButton from '@/_private/components/details/detailsFooter/RecreateButton';
 
 export default function GraphvizPage(
@@ -101,7 +104,7 @@ export default function GraphvizPage(
           variant="light"
           as={Link}
         >
-          ←
+          Back
         </Button>
         <div className="pt-2">Job visualization</div>
         <Button className="invisible" />
@@ -121,7 +124,6 @@ export default function GraphvizPage(
                 dispatchSimulation={dispatchSimulation}
                 setDeleted={setDeleted}
               />
-              <CopyButton />
               <RecreateButton
                 selectedSimulation={selectedSimulation as Simulation}
                 isOpen={false}

@@ -2,7 +2,12 @@
 
 import {
   Modal,
-  ModalBody, ModalContent, ModalFooter, ModalHeader, Spinner, useDisclosure,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  Spinner,
+  useDisclosure,
 } from '@nextui-org/react';
 import React, { useEffect } from 'react';
 
@@ -19,7 +24,7 @@ export default function Loading() {
       isOpen={isOpen}
       size="2xl"
       scrollBehavior="inside"
-      backdrop="opaque"
+      backdrop="blur"
       isDismissable={false}
     >
       <ModalContent>

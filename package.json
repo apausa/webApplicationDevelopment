@@ -3,12 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "predev": "chmod 755 ./configuredMethods && chmod +x ./app/_private/utils/submit.sh",
+    "prebuild": "chmod 755 ./configuredMethods && chmod +x ./app/_private/utils/submit.sh",
+    "prestart": "chmod 755 ./configuredMethods && chmod +x ./app/_private/utils/submit.sh",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint --no-cache",
-    "test": "jest --watchAll --collect-coverage",
-    "cypress": "cypress open"
+    "lint": "next lint --no-cache"
   },
   "dependencies": {
     "@nextui-org/react": "^2.1.0",
@@ -35,7 +36,6 @@
     "@types/ws": "^8.5.5",
     "@typescript-eslint/eslint-plugin": "^5.61.0",
     "@typescript-eslint/parser": "^5.61.0",
-    "cypress": "^12.17.1",
     "eslint": "^8.44.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-airbnb-typescript": "^17.0.0",

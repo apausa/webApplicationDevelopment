@@ -2,14 +2,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
-First, define environment variables by creating a ```.env``` file.
-
-```bash
-SCRIPTS_DIRECTORY_PATH=/Users/User/Work/Scripts
-GRID_SUBMIT_PATH=/Users/User/Work/grid_submit.sh
-```
-
-Then, generate build:
+First, generate build:
 
 ```bash
 npm run build
