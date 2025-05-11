@@ -1,5 +1,10 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+## Note
+
+- For simplicity, bash scripts are created when user clicks on the 'Run script' button (and not when staged). 
+- To do: mock running processes and succesfull runs so that their visualization graph can be accessed. 
+
 ## Getting Started
 
 First, generate build:
@@ -17,7 +22,6 @@ Then, run alienv:
 ```bash
 /cvmfs/alice.cern.ch/bin/alienv enter O2sim
 ```
-
 
 Finally, run the production server:
 
