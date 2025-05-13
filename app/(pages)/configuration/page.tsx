@@ -12,7 +12,6 @@ import { notFound } from 'next/navigation';
 
 // Reducers
 import formReducer from '@/_private/lib/reducers/formReducer';
-import simulationReducer from '@/_private/lib/reducers/simulationReducer';
 
 // Constants
 import INITIAL_FORM from '@/_private/lib/constants/formConstants';
@@ -24,9 +23,12 @@ import ConfigurationMain from '@/_private/components/configuration/configuration
 import simulationActionCreators from '@/_private/lib/actions/simulationActions';
 import formActionCreators from '@/_private/lib/actions/formActions';
 
+// Context
+import { useSimulation } from '@/_private/context/SimulationContext';
+
 export default function ConfigurationPage() {
   const [loading, setLoading] = useState(true);
-  const [, dispatchSimulation] = useReducer(simulationReducer, []);
+  const [, dispatchSimulation] = useSimulation();
   const [form, dispatchForm] = useReducer(formReducer, null);
 
   const onStage = useCallback(async (): Promise<void> => {

@@ -14,7 +14,6 @@ import React, {
   useCallback,
   useEffect,
   useMemo,
-  useReducer,
   useState,
 } from 'react';
 
@@ -26,11 +25,8 @@ import RecreateButton from '@/_private/components/details/detailsFooter/Recreate
 // Types
 import { Simulation } from '@/_private/types/lib/simulationTypes';
 
-// Actions
-import simulationActionCreators from '@/_private/lib/actions/simulationActions';
-
-// Reducers
-import simulationReducer from '@/_private/lib/reducers/simulationReducer';
+// Context
+import { useSimulation } from '@/_private/context/SimulationContext';
 
 export default function DetailsModal(
   {
@@ -42,16 +38,14 @@ export default function DetailsModal(
   const { isOpen, onOpen, onClose } = useDisclosure();
   const pathName = usePathname();
   const router = useRouter();
-
   const [loading, setLoading] = useState(true);
   const [deleted, setDeleted] = useState(false);
-  const [simulations, dispatchSimulation] = useReducer(simulationReducer, []);
+  const [simulations] = useSimulation();
 
-  // First, gets simulations
+  // First, opens modal
   useEffect((): void => {
     if (pathName.startsWith('/simulation')) {
       onOpen();
-      simulationActionCreators.readAllSimulations(dispatchSimulation);
     }
   }, [pathName]);
 
@@ -99,7 +93,6 @@ export default function DetailsModal(
             : (
               <DetailsMain
                 selectedSimulation={selectedSimulation as Simulation}
-                dispatchSimulation={dispatchSimulation}
               />
             )}
         </ModalBody>
@@ -110,7 +103,6 @@ export default function DetailsModal(
               <>
                 <DeleteButton
                   selectedSimulation={selectedSimulation as Simulation}
-                  dispatchSimulation={dispatchSimulation}
                   setDeleted={setDeleted}
                 />
                 <RecreateButton

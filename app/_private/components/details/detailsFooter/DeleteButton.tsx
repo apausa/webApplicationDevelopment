@@ -6,17 +6,21 @@ import { Button } from '@nextui-org/react';
 import simulationActionCreators from '@/_private/lib/actions/simulationActions';
 
 // Types
-import { Simulation, SimulationAction } from '@/_private/types/lib/simulationTypes';
+import { Simulation } from '@/_private/types/lib/simulationTypes';
+
+// Context
+import { useSimulation } from '@/_private/context/SimulationContext';
 
 export default function DeleteButton(
   {
-    dispatchSimulation, setDeleted, selectedSimulation,
+    setDeleted, selectedSimulation,
   }: {
-    dispatchSimulation: React.Dispatch<SimulationAction>,
     setDeleted: React.Dispatch<React.SetStateAction<boolean>>
     selectedSimulation: Simulation,
   },
 ) {
+  const [, dispatchSimulation] = useSimulation();
+
   const onDelete = useCallback((): void => {
     simulationActionCreators.deleteSimulation(dispatchSimulation, selectedSimulation.id);
     setDeleted(true);

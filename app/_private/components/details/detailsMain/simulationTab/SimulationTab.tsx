@@ -19,18 +19,22 @@ import { getStatusColor } from '@/_private/utils/pages';
 import simulationActionCreators from '@/_private/lib/actions/simulationActions';
 
 // Types
-import { Simulation, UpdateSimulationAction } from '@/_private/types/lib/simulationTypes';
+import { Simulation } from '@/_private/types/lib/simulationTypes';
+
+// Context
+import { useSimulation } from '@/_private/context/SimulationContext';
 
 export default function SimulationTab(
   {
-    dispatchSimulation, selectedSimulation, script,
+    selectedSimulation, script,
   }:
   {
-    dispatchSimulation: React.Dispatch<UpdateSimulationAction>,
     selectedSimulation: Simulation,
     script: 'localRunWorkflow' | 'gridRunWorkflow',
   },
 ) {
+  const [, dispatchSimulation] = useSimulation();
+
   const {
     id,
     scripts: {
@@ -40,19 +44,24 @@ export default function SimulationTab(
     },
   }: Simulation = selectedSimulation;
 
+  // @refactored —> Implemented global simulation context
   const handleRunSimulationScript = useCallback((): void => {
-    simulationActionCreators.updateSimulationScriptStatus(
-      dispatchSimulation,
-      selectedSimulation,
-      script,
-    );
+    const unresolvedSimulation: Simulation = {
+      ...selectedSimulation,
+      scripts: {
+        ...selectedSimulation.scripts,
+        [script]: { ...selectedSimulation.scripts[script], scriptStatus: 'Running' },
+      },
+    };
+
+    simulationActionCreators.updateSimulation(dispatchSimulation, unresolvedSimulation);
 
     simulationActionCreators.runSimulationScript(
       dispatchSimulation,
-      selectedSimulation,
+      unresolvedSimulation,
       script,
     );
-  }, [dispatchSimulation, selectedSimulation]);
+  }, [dispatchSimulation, selectedSimulation, script]);
 
   return (
     <>

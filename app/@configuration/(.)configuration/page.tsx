@@ -26,19 +26,20 @@ import INITIAL_FORM from '@/_private/lib/constants/formConstants';
 
 // Reducers
 import formReducer from '@/_private/lib/reducers/formReducer';
-import simulationReducer from '@/_private/lib/reducers/simulationReducer';
 
 // Actions
 import formActionCreators from '@/_private/lib/actions/formActions';
 import simulationActionCreators from '@/_private/lib/actions/simulationActions';
 
+// Context
+import { useSimulation } from '@/_private/context/SimulationContext';
+
 export default function ConfigurationModal() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const pathName = usePathname();
   const router = useRouter();
-
   const [loading, setLoading] = useState(true);
-  const [, dispatchSimulation] = useReducer(simulationReducer, []);
+  const [, dispatchSimulation] = useSimulation();
   const [form, dispatchForm] = useReducer(formReducer, null);
 
   const handleClose = useCallback((): void => {

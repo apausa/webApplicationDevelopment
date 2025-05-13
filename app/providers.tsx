@@ -3,6 +3,9 @@
 import React from 'react';
 import { NextUIProvider } from '@nextui-org/react';
 
+// Context
+import { SimulationProvider } from './_private/context/SimulationContext';
+
 export default function Providers(
   { children }
   :
@@ -10,7 +13,9 @@ export default function Providers(
 ) {
   return (
     <NextUIProvider>
-      {children}
+      <SimulationProvider>
+        {children}
+      </SimulationProvider>
     </NextUIProvider>
   );
 }

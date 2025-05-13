@@ -5,13 +5,12 @@ import React from 'react';
 import SimulationTab from './simulationTab/SimulationTab';
 
 // Types
-import { Simulation, SimulationAction } from '@/_private/types/lib/simulationTypes';
+import { Simulation } from '@/_private/types/lib/simulationTypes';
 
 export default function SimulationMain({
-  selectedSimulation, dispatchSimulation,
+  selectedSimulation,
 }: {
   selectedSimulation: Simulation,
-  dispatchSimulation: React.Dispatch<SimulationAction>,
 }) {
   return (
     <div className="mb-2">
@@ -22,7 +21,6 @@ export default function SimulationMain({
           className="px-0 py-2 flex flex-col"
         >
           <SimulationTab
-            dispatchSimulation={dispatchSimulation}
             selectedSimulation={selectedSimulation}
             script="localRunWorkflow"
           />
@@ -33,7 +31,6 @@ export default function SimulationMain({
           className="px-0 py-2 flex flex-col"
         >
           <SimulationTab
-            dispatchSimulation={dispatchSimulation}
             selectedSimulation={selectedSimulation}
             script="gridRunWorkflow"
           />
