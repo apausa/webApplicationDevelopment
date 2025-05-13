@@ -3,7 +3,6 @@
 'use client';
 
 import React, {
-  useCallback,
   useEffect,
   useMemo,
   useRef,
@@ -48,7 +47,7 @@ export default function GraphvizPage(
     (simulation: Simulation): boolean => (simulation.id === id),
   ), [simulations, id]);
 
-  const onSimulation = useCallback((): void => {
+  const onSimulation = (): void => {
     const {
       scripts: {
         localCreateWorkflow: { graphvizData, scriptStatus },
@@ -95,7 +94,7 @@ export default function GraphvizPage(
       default:
         break;
     }
-  }, [selectedSimulation]);
+  };
 
   useEffect((): void => {
     if (!selectedSimulation && deleted) router.push('/');

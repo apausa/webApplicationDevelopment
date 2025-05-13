@@ -1,5 +1,5 @@
 import { Button } from '@nextui-org/react';
-import React, { useCallback, useReducer } from 'react';
+import React, { useReducer } from 'react';
 import Link from 'next/link';
 
 // Actions
@@ -22,10 +22,10 @@ export default function RecreateButton(
 ) {
   const [, dispatchForm] = useReducer(formReducer, null);
 
-  const onRecreate = useCallback((): void => {
+  const onRecreate = () => {
     formActionCreators.createForm(dispatchForm, selectedSimulation.form);
     if (isOpen) onClose();
-  }, [selectedSimulation, isOpen]);
+  };
 
   return (
     <Button

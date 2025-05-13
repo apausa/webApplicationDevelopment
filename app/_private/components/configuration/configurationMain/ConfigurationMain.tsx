@@ -1,5 +1,5 @@
 import { Input, Tab, Tabs } from '@nextui-org/react';
-import React, { Key, useCallback } from 'react';
+import React, { Key } from 'react';
 
 // Components
 import AdvancedMode from './tabs/AdvancedTab';
@@ -23,21 +23,21 @@ export default function BuildMain(
     dispatchForm: React.Dispatch<FormAction>,
   },
 ) {
-  const onTitleChange = useCallback((value: string) => {
+  const onTitleChange = (value: string) => {
     formActionCreators.updateFormTitle(dispatchForm, value);
-  }, []);
+  };
 
-  const onVersionChange = useCallback((value: string) => {
+  const onVersionChange = (value: string) => {
     formActionCreators.updateFormVersion(dispatchForm, value);
-  }, []);
+  };
 
-  const onSelectionChange = useCallback((key: Key) => {
+  const onSelectionChange = (key: Key) => {
     formActionCreators.updateFormAdvanced(dispatchForm, key === 'advanced');
-  }, []);
+  };
 
-  const onSubjobsChange = useCallback((value: string) => {
+  const onSubjobsChange = (value: string) => {
     formActionCreators.updateFormSubjobs(dispatchForm, value);
-  }, []);
+  };
 
   return (
     <form>

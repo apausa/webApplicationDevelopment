@@ -1,7 +1,6 @@
 'use client';
 
 import React, {
-  useCallback,
   useEffect,
   useReducer,
   useState,
@@ -31,13 +30,13 @@ export default function ConfigurationPage() {
   const [, dispatchSimulation] = useSimulation();
   const [form, dispatchForm] = useReducer(formReducer, null);
 
-  const onStage = useCallback(async (): Promise<void> => {
+  const onStage = async (): Promise<void> => {
     await simulationActionCreators.createSimulation(dispatchSimulation, form);
-  }, [form]);
+  };
 
-  const onReset = useCallback((): void => {
+  const onReset = (): void => {
     formActionCreators.createForm(dispatchForm, INITIAL_FORM);
-  }, []);
+  };
 
   useEffect(() => {
     simulationActionCreators.readAllSimulations(dispatchSimulation);

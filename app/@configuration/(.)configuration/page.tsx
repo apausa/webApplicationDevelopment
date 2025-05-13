@@ -11,7 +11,6 @@ import {
   useDisclosure,
 } from '@nextui-org/react';
 import React, {
-  useCallback,
   useReducer,
   useEffect,
   useState,
@@ -42,20 +41,20 @@ export default function ConfigurationModal() {
   const [, dispatchSimulation] = useSimulation();
   const [form, dispatchForm] = useReducer(formReducer, null);
 
-  const handleClose = useCallback((): void => {
+  const handleClose = (): void => {
     onClose();
     router.push('/');
-  }, [router]);
+  };
 
-  const onStage = useCallback(async (): Promise<void> => {
+  const onStage = async (): Promise<void> => {
     await simulationActionCreators.createSimulation(dispatchSimulation, form);
     formActionCreators.createForm(dispatchForm, INITIAL_FORM);
     handleClose();
-  }, [form]);
+  };
 
-  const onReset = useCallback((): void => {
+  const onReset = (): void => {
     formActionCreators.createForm(dispatchForm, INITIAL_FORM);
-  }, []);
+  };
 
   useEffect(() => {
     if (pathName === '/configuration') {

@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 
 // State
 import tableActionCreators from '@/_private/lib/actions/tableActions';
@@ -18,10 +18,10 @@ export default function TopContent(
     allItems: Simulation[]
   },
 ) {
-  const onChange = useCallback(({ target: { value } }: any) => {
+  const onChange = ({ target: { value } }: any) => {
     tableActionCreators.updatePageRows(dispatchTable, Number(value));
     tableActionCreators.updatePageCurrent(dispatchTable, 1);
-  }, []);
+  };
 
   return (
     <div className="flex justify-between text-small">

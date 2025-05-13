@@ -11,7 +11,6 @@ import {
 } from '@nextui-org/react';
 import { notFound, usePathname, useRouter } from 'next/navigation';
 import React, {
-  useCallback,
   useEffect,
   useMemo,
   useState,
@@ -54,10 +53,10 @@ export default function DetailsModal(
     simulations.find((simulation: Simulation): boolean => simulation.id === id)
   ), [simulations, id]);
 
-  const handleClose = useCallback((): void => {
+  const handleClose = (): void => {
     onClose();
     router.push('/');
-  }, [router]);
+  };
 
   useEffect(() => {
     if (!selectedSimulation && deleted) handleClose();

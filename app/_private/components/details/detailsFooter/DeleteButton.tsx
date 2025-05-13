@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 
 import { Button } from '@nextui-org/react';
 
@@ -21,10 +21,10 @@ export default function DeleteButton(
 ) {
   const [, dispatchSimulation] = useSimulation();
 
-  const onDelete = useCallback((): void => {
+  const onDelete = (): void => {
     simulationActionCreators.deleteSimulation(dispatchSimulation, selectedSimulation.id);
     setDeleted(true);
-  }, [selectedSimulation]);
+  };
 
   return (
     <Button

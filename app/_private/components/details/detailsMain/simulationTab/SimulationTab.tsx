@@ -5,7 +5,7 @@ import {
   Input,
   Textarea,
 } from '@nextui-org/react';
-import React, { useCallback } from 'react';
+import React from 'react';
 import Link from 'next/link';
 
 // Components
@@ -45,7 +45,7 @@ export default function SimulationTab(
   }: Simulation = selectedSimulation;
 
   // @refactored —> Implemented global simulation context
-  const handleRunSimulationScript = useCallback((): void => {
+  const handleRunSimulationScript = (): void => {
     const unresolvedSimulation: Simulation = {
       ...selectedSimulation,
       scripts: {
@@ -61,7 +61,7 @@ export default function SimulationTab(
       unresolvedSimulation,
       script,
     );
-  }, [dispatchSimulation, selectedSimulation, script]);
+  };
 
   return (
     <>
