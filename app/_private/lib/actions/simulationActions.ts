@@ -1,6 +1,9 @@
 // Types
 import { ApiGridRunWorkflow, ApiLocalCreateWorkflow, ApiLocalRunWorkflow } from '@/_private/types/api';
-import { Simulation, SimulationActionCreators } from '@/_private/types/lib/simulationTypes';
+import {
+  Simulation,
+  SimulationActionCreators,
+} from '@/_private/types/lib/simulationTypes';
 
 // Constants
 export const API_GRID_RUN_WORKFLOW: ApiGridRunWorkflow = '/api/simulation/gridRunWorkflow';
@@ -34,16 +37,8 @@ const simulationActionCreators: SimulationActionCreators = {
     dispatch({ type: 'DELETE_SIMULATION', id });
   },
 
-  updateSimulationScriptStatus: (dispatch, simulation, script) => {
-    const unresolvedSimulation: Simulation = {
-      ...simulation,
-      scripts: {
-        ...simulation.scripts,
-        [script]: { ...simulation.scripts[script], scriptStatus: 'Running' },
-      },
-    };
-
-    dispatch({ type: 'UPDATE_SIMULATION', simulation: unresolvedSimulation });
+  updateSimulation: (dispatch, simulation) => {
+    dispatch({ type: 'UPDATE_SIMULATION', simulation });
   },
 
   runSimulationScript: async (dispatch, simulation, script) => {
@@ -61,8 +56,13 @@ const simulationActionCreators: SimulationActionCreators = {
       { method: 'PUT', body: JSON.stringify(simulation) },
     );
 
+    // @refactored —> Implemented global simulation context
     const resolvedSimulation: Simulation = await unresolvedSimulation.json();
-    dispatch({ type: 'UPDATE_SIMULATION', simulation: resolvedSimulation });
+    const handleUpdate = () => {
+      dispatch({ type: 'UPDATE_SIMULATION', simulation: resolvedSimulation });
+    };
+
+    handleUpdate();
   },
 };
 

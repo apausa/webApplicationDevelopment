@@ -15,7 +15,6 @@ import { INITIAL_TABLE } from '@/_private/lib/constants/tableConstants';
 
 // Reducers
 import tableReducer from './_private/lib/reducers/tableReducer';
-import simulationReducer from './_private/lib/reducers/simulationReducer';
 
 // Types
 import { Simulation, UseReducer } from './_private/types/lib/simulationTypes';
@@ -24,10 +23,13 @@ import { TableType, TableUseReducer } from './_private/types/lib/tableTypes';
 // Actions
 import simulationActionCreators from './_private/lib/actions/simulationActions';
 
+// Context
+import { useSimulation } from './_private/context/SimulationContext';
+
 export default function Dashboard() {
   const pathname: string = usePathname();
   const [table, dispatchTable]: TableUseReducer = useReducer(tableReducer, INITIAL_TABLE);
-  const [simulations, dispatchSimulation]: UseReducer = useReducer(simulationReducer, []);
+  const [simulations, dispatchSimulation]: UseReducer = useSimulation();
   const [allItems, setAllItems] = useState<Simulation[]>([]);
 
   useEffect(() => {

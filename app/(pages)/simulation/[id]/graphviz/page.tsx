@@ -3,10 +3,8 @@
 'use client';
 
 import React, {
-  useCallback,
   useEffect,
   useMemo,
-  useReducer,
   useRef,
   useState,
 } from 'react';
@@ -20,10 +18,12 @@ import { Simulation } from '@/_private/types/lib/simulationTypes';
 // Actions
 import simulationActionCreators from '@/_private/lib/actions/simulationActions';
 
-// Reducers
-import simulationReducer from '@/_private/lib/reducers/simulationReducer';
+// Components
 import DeleteButton from '@/_private/components/details/detailsFooter/DeleteButton';
 import RecreateButton from '@/_private/components/details/detailsFooter/RecreateButton';
+
+// Context
+import { useSimulation } from '@/_private/context/SimulationContext';
 
 export default function GraphvizPage(
   { params: { id } }:
@@ -35,7 +35,7 @@ export default function GraphvizPage(
   const [loading, setLoading] = useState(true);
   const [rendered, setRendered] = useState<null | boolean>(null);
   const [deleted, setDeleted] = useState(false);
-  const [simulations, dispatchSimulation] = useReducer(simulationReducer, []);
+  const [simulations, dispatchSimulation] = useSimulation();
 
   // First, gets simulations
   useEffect(() => {
@@ -47,7 +47,7 @@ export default function GraphvizPage(
     (simulation: Simulation): boolean => (simulation.id === id),
   ), [simulations, id]);
 
-  const onSimulation = useCallback((): void => {
+  const onSimulation = (): void => {
     const {
       scripts: {
         localCreateWorkflow: { graphvizData, scriptStatus },
@@ -55,19 +55,30 @@ export default function GraphvizPage(
     }: Simulation = selectedSimulation!;
 
     switch (scriptStatus) {
-      case 'Staged':
-        simulationActionCreators.updateSimulationScriptStatus(
-          dispatchSimulation,
-          selectedSimulation as Simulation,
-          'localCreateWorkflow',
-        );
+      case 'Staged': {
+        if (selectedSimulation) {
+          const unresolvedSimulation: Simulation = {
+            ...selectedSimulation,
+            scripts: {
+              ...selectedSimulation.scripts,
+              localCreateWorkflow: {
+                ...selectedSimulation.scripts.localCreateWorkflow,
+                scriptStatus: 'Running',
+              },
+            },
+          };
 
-        simulationActionCreators.runSimulationScript(
-          dispatchSimulation,
-          selectedSimulation as Simulation,
-          'localCreateWorkflow',
-        );
+          simulationActionCreators.updateSimulation(dispatchSimulation, unresolvedSimulation);
+
+          simulationActionCreators.runSimulationScript(
+            dispatchSimulation,
+            unresolvedSimulation,
+            'localCreateWorkflow',
+          );
+        }
+
         break;
+      }
       case 'Completed':
         if (graphvizData) {
           graphviz(ref.current)
@@ -83,7 +94,7 @@ export default function GraphvizPage(
       default:
         break;
     }
-  }, [selectedSimulation]);
+  };
 
   useEffect((): void => {
     if (!selectedSimulation && deleted) router.push('/');
@@ -121,7 +132,6 @@ export default function GraphvizPage(
             <div className="flex justify-between">
               <DeleteButton
                 selectedSimulation={selectedSimulation as Simulation}
-                dispatchSimulation={dispatchSimulation}
                 setDeleted={setDeleted}
               />
               <RecreateButton

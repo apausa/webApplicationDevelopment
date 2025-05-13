@@ -1,4 +1,4 @@
-import React, { useMemo, useCallback } from 'react';
+import React, { useMemo } from 'react';
 import {
   Table,
   TableHeader,
@@ -37,13 +37,13 @@ export default function DashboardMain(
     return allItems.slice(start, start + rows);
   }, [allItems, table.page]);
 
-  const onSortChange = useCallback((sortDescriptor: SortDescriptor) => {
+  const onSortChange = (sortDescriptor: SortDescriptor) => {
     tableActionCreators.updateSortDescriptor(dispatchTable, sortDescriptor);
-  }, []);
+  };
 
-  const onSelectionChange = useCallback((keys: any) => {
+  const onSelectionChange = (keys: any) => {
     tableActionCreators.updateSelectedKey(dispatchTable, keys);
-  }, []);
+  };
 
   return (
     <Table

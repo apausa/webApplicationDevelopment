@@ -7,7 +7,7 @@ import {
   Input,
   Selection,
 } from '@nextui-org/react';
-import React, { useCallback } from 'react';
+import React from 'react';
 import Link from 'next/link';
 
 // Actions
@@ -28,19 +28,19 @@ export default function DashboardHeader(
     dispatchTable: React.Dispatch<TableAction>
   },
 ) {
-  const onClear = useCallback((): void => {
+  const onClear = (): void => {
     tableActionCreators.updateFilterQuery(dispatchTable, '');
     tableActionCreators.updatePageCurrent(dispatchTable, 1);
-  }, []);
+  };
 
-  const onValueChange = useCallback((query: string) => {
+  const onValueChange = (query: string) => {
     tableActionCreators.updateFilterQuery(dispatchTable, query);
     tableActionCreators.updatePageCurrent(dispatchTable, 1);
-  }, []);
+  };
 
-  const onSelectionChange = useCallback((status: Selection) => {
+  const onSelectionChange = (status: Selection) => {
     tableActionCreators.updateFilterStatus(dispatchTable, status);
-  }, []);
+  };
 
   return (
     <>
