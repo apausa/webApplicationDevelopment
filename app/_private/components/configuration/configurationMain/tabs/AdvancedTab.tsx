@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Textarea } from '@nextui-org/react';
 
 // Actions
@@ -23,9 +23,9 @@ export default function AdvancedTab(
     formActionCreators.updateFormScript(dispatchForm, getScript(createWorkflow, runWorkflow));
   }, [createWorkflow, runWorkflow]);
 
-  const onChange = useCallback(({ target: { value } }: any): void => {
+  const onChange = ({ target: { value } }: any): void => {
     formActionCreators.updateFormScript(dispatchForm, value);
-  }, []);
+  };
 
   return (
     <Textarea

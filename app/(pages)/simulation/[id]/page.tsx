@@ -4,7 +4,6 @@ import { Button, Spinner } from '@nextui-org/react';
 import React, {
   useEffect,
   useMemo,
-  useReducer,
   useState,
 } from 'react';
 import { notFound, useRouter } from 'next/navigation';
@@ -18,28 +17,19 @@ import RecreateButton from '@/_private/components/details/detailsFooter/Recreate
 // Types
 import { Simulation } from '@/_private/types/lib/simulationTypes';
 
-// Actions
-import simulationActionCreators from '@/_private/lib/actions/simulationActions';
-
-// Reducers
-import simulationReducer from '@/_private/lib/reducers/simulationReducer';
+// Context
+import { useSimulation } from '@/_private/context/SimulationContext';
 
 export default function DetailsPage(
   { params: { id } }:
   { params: { id: string } },
 ) {
   const router = useRouter();
-
   const [loading, setLoading] = useState(true);
   const [deleted, setDeleted] = useState(false);
-  const [simulations, dispatchSimulation] = useReducer(simulationReducer, []);
+  const [simulations] = useSimulation();
 
-  // First, gets simulations
-  useEffect(() => {
-    simulationActionCreators.readAllSimulations(dispatchSimulation);
-  }, []);
-
-  // Then, finds simulation
+  // First, finds simulation
   const selectedSimulation: Simulation | undefined = useMemo(() => simulations.find(
     (simulation: Simulation): boolean => simulation.id === id,
   ), [simulations, id]);
@@ -72,7 +62,6 @@ export default function DetailsPage(
           : (
             <DetailsMain
               selectedSimulation={selectedSimulation as Simulation}
-              dispatchSimulation={dispatchSimulation}
             />
           )}
       </main>
@@ -87,7 +76,6 @@ export default function DetailsPage(
             <div className="flex justify-between">
               <DeleteButton
                 selectedSimulation={selectedSimulation as Simulation}
-                dispatchSimulation={dispatchSimulation}
                 setDeleted={setDeleted}
               />
               <RecreateButton

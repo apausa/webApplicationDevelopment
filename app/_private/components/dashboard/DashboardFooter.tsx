@@ -1,5 +1,5 @@
 import { Button, Pagination } from '@nextui-org/react';
-import React, { useCallback, useMemo } from 'react';
+import React, { useMemo } from 'react';
 
 // State
 import tableActionCreators from '@/_private/lib/actions/tableActions';
@@ -21,21 +21,21 @@ export default function DashboardFooter({
     Math.ceil((allItems.length || 1) / table.page.rows)
   ), [allItems.length, table.page.rows]);
 
-  const onNextPage = useCallback((): void => {
+  const onNextPage = (): void => {
     if (table.page.current < pages) {
       tableActionCreators.updatePageCurrent(dispatchTable, table.page.current + 1);
     }
-  }, [pages, table.page.current]);
+  };
 
-  const onPreviousPage = useCallback((): void => {
+  const onPreviousPage = (): void => {
     if (table.page.current > 1) {
       tableActionCreators.updatePageCurrent(dispatchTable, table.page.current - 1);
     }
-  }, [pages, table.page.current]);
+  };
 
-  const onChange = useCallback((page: number): void => {
+  const onChange = (page: number): void => {
     tableActionCreators.updatePageCurrent(dispatchTable, page);
-  }, []);
+  };
 
   return (
     <footer className="p-4 border-t border-t-neutral-800 flex justify-between">

@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import {
   CheckboxGroup,
   Checkbox,
@@ -36,13 +36,13 @@ export default function DefaultTab(
   const runArgs = useMemo((): string[] => (
     getSelectedKeys(runWorkflow.args)), [runWorkflow.args]);
 
-  const onBuildCmdChange = useCallback((values: string[]): void => {
+  const onBuildCmdChange = (values: string[]): void => {
     formActionCreator.updateBuildCmdSelected(dispatchForm, values);
-  }, []);
+  };
 
-  const onRunCmdChange = useCallback((values: string[]): void => {
+  const onRunCmdChange = (values: string[]): void => {
     formActionCreator.updateRunCmdSelected(dispatchForm, values);
-  }, []);
+  };
 
   return (
     <Accordion isCompact fullWidth variant="shadow">
