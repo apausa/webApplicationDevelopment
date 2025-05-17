@@ -1,9 +1,5 @@
 # Particle Physics Simulation Dashboard
 
-## Note
-
-- To do: mock running processes and succesfull runs so that their visualization graph can be accessed. 
-
 ## Getting Started
 
 First, install dependencies

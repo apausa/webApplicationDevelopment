@@ -52,3 +52,5 @@ export const getGridRunWorkflowBody = (version: string, script: string): string 
   '#JDL_OUTPUT=*.root@disk=1,*.log@disk=1',
   script,
 ].join('\n\n'));
+
+// @todo mock processes and runs so that their visualization graph can be accessed
