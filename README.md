@@ -2,7 +2,6 @@
 
 ## Note
 
-- For simplicity, bash scripts are created when user clicks on the 'Run script' button (and not when staged). 
 - To do: mock running processes and succesfull runs so that their visualization graph can be accessed. 
 
 ## Getting Started

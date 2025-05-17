@@ -6,7 +6,7 @@ import { Simulation } from '@/_private/types/lib/simulationTypes';
 import { LocalRunArgs, PutSimulation } from '@/_private/types/api';
 
 // Utils
-import { createFile, getLocalArgs, getSegment } from '@/_private/utils/api';
+import { getLocalArgs, getSegment, readFile } from '@/_private/utils/api';
 
 // Constants
 import { APPTAINER_PATH, SCRIPTS_PATH } from '@/_private/lib/constants/apiConstants';
@@ -16,11 +16,8 @@ export async function PUT(request: Request): Promise<PutSimulation> {
   const { scripts: { localRunWorkflow }, id }: Simulation = unresolvedSimulation;
 
   try {
-    // Creates script
     const absolutePath: string = getSegment(process.cwd(), SCRIPTS_PATH);
     const segment: string = getSegment(absolutePath, id);
-
-    await createFile(segment, localRunWorkflow);
 
     // Runs script
     const args: LocalRunArgs = getLocalArgs(segment, localRunWorkflow.scriptPath);
@@ -47,6 +44,13 @@ export async function PUT(request: Request): Promise<PutSimulation> {
         });
       });
     });
+
+    // Attempt to retrieve graphvizData
+    try {
+      resolvedSimulation.scripts.localRunWorkflow.graphvizData = await readFile(getSegment(segment, 'workflow.gv'));
+    } catch {
+      resolvedSimulation.scripts.localRunWorkflow.graphvizData = null;
+    }
 
     // Returns script
     return NextResponse.json(resolvedSimulation, { status: 200 });

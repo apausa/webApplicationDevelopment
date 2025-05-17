@@ -50,7 +50,7 @@ export default function GraphvizPage(
   const onSimulation = (): void => {
     const {
       scripts: {
-        localCreateWorkflow: { graphvizData, scriptStatus },
+        localRunWorkflow: { graphvizData, scriptStatus },
       },
     }: Simulation = selectedSimulation!;
 
@@ -61,8 +61,8 @@ export default function GraphvizPage(
             ...selectedSimulation,
             scripts: {
               ...selectedSimulation.scripts,
-              localCreateWorkflow: {
-                ...selectedSimulation.scripts.localCreateWorkflow,
+              localRunWorkflow: {
+                ...selectedSimulation.scripts.localRunWorkflow,
                 scriptStatus: 'Running',
               },
             },
@@ -73,7 +73,7 @@ export default function GraphvizPage(
           simulationActionCreators.runSimulationScript(
             dispatchSimulation,
             unresolvedSimulation,
-            'localCreateWorkflow',
+            'localRunWorkflow',
           );
         }
 
