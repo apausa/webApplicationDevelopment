@@ -31,7 +31,7 @@ export default function GraphvizPage(
 ) {
   const router = useRouter();
 
-  const ref = useRef(null);
+  const ref = useRef<HTMLDivElement>(null);
   const [loading, setLoading] = useState(true);
   const [rendered, setRendered] = useState<null | boolean>(null);
   const [deleted, setDeleted] = useState(false);
@@ -81,9 +81,18 @@ export default function GraphvizPage(
       }
       case 'Completed':
         if (graphvizData) {
-          graphviz(ref.current)
-            .renderDot(graphvizData)
-            .on('end', () => { setRendered(true); });
+          const container = ref.current;
+
+          if (container) {
+            const containerRect = container.getBoundingClientRect();
+
+            graphviz(ref.current)
+              .width(containerRect.width)
+              .height(containerRect.height)
+              .fit(true)
+              .renderDot(graphvizData)
+              .on('end', () => { setRendered(true); });
+          }
         } else {
           setRendered(false);
         }
@@ -108,7 +117,7 @@ export default function GraphvizPage(
   if ((!loading && !selectedSimulation) || (rendered === false)) return notFound();
 
   return (
-    <>
+    <div className="h-screen flex flex-col">
       <header className="p-4 border-b border-b-neutral-800 flex justify-between">
         <Button
           href={`/simulation/${id}`}
@@ -120,8 +129,8 @@ export default function GraphvizPage(
         <div className="pt-2">Job visualization</div>
         <Button className="invisible" />
       </header>
-      <main className="mb-auto overflow-auto">
-        <div ref={ref}>
+      <main className="flex-1 overflow-auto">
+        <div ref={ref} className="h-full w-full">
           {!rendered && <Spinner className="pt-2 flex justify-center" />}
         </div>
       </main>
@@ -142,6 +151,6 @@ export default function GraphvizPage(
             </div>
           )}
       </footer>
-    </>
+    </div>
   );
 }
