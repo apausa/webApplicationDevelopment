@@ -3,7 +3,7 @@ configuredMethods/*/
 !configuredMethods/readme.md
 
 # dependencies
-/node_modules
+node_modules
 /.pnp
 .pnp.js
 
@@ -30,5 +30,14 @@ out
 next-env.d.ts
 
 # ide files
-.vscode/
-.idea/
+.vscode
+.idea
+
+# git
+.git
+.gitignore
+
+# docker
+Dockerfile*
+docker-compose*.yml
+.dockerignore
