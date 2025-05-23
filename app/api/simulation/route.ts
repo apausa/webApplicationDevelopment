@@ -14,7 +14,7 @@ import {
   formatCurrentDate, formatCurrentTime, getScript, getSelectedVersion,
 } from '@/_private/utils/pages';
 import {
-  getGridRunWorkflowBody, getLocalCreateWorkflowBody, getLocalRunWorkflowBody, getSegment,
+  getLocalBodyCommented, getGridBodyOriginal, getSegment,
 } from '@/_private/utils/api';
 
 // Constants
@@ -26,39 +26,49 @@ export async function POST(request: Request): Promise<PostSimulation> {
   try {
     const currentDate: Date = new Date();
     const id: string = uuidv4();
-    const segment: string = getSegment(SCRIPTS_PATH, id);
     const version: string = getSelectedVersion(form.version);
     const script: string = (form.advanced && form.script !== null)
       ? form.script
       : getScript(form.createWorkflow, form.runWorkflow);
 
+    const absolutePath: string = getSegment(process.cwd(), SCRIPTS_PATH);
+    const absoluteSegment: string = getSegment(absolutePath, id);
+
+    const localRunWorkflow = {
+      scriptPath: path.join(absoluteSegment, 'localRunWorkflow.sh'),
+      scriptBody: getLocalBodyCommented(version, script),
+      scriptStatus: 'Staged',
+      stderrData: null,
+      stdoutData: null,
+    };
+
+    const gridRunWorkflow = {
+      scriptPath: path.join(absoluteSegment, 'gridRunWorkflow.sh'),
+      scriptBody: getGridBodyOriginal(version, script),
+      scriptStatus: 'Staged',
+      stderrData: null,
+      stdoutData: null,
+    };
+
+    // Create directory for scripts
+    await fs.mkdir(absoluteSegment, { recursive: true });
+    await fs.chmod(absoluteSegment, '755');
+
+    // Write script files
+    await fs.writeFile(localRunWorkflow.scriptPath, localRunWorkflow.scriptBody);
+    await fs.chmod(localRunWorkflow.scriptPath, '755');
+    await fs.writeFile(gridRunWorkflow.scriptPath, gridRunWorkflow.scriptBody);
+    await fs.chmod(gridRunWorkflow.scriptPath, '755');
+
     return NextResponse.json({
       id,
       date: `${formatCurrentDate(currentDate)} • ${formatCurrentTime(currentDate)}`,
-      form: { ...form, script, title: form.title || `Simulation created on ${formatCurrentDate(currentDate)} at ${formatCurrentTime(currentDate)}` },
-      scripts: {
-        localCreateWorkflow: {
-          scriptPath: path.join(segment, 'localCreateWorkflow.sh'),
-          scriptBody: getLocalCreateWorkflowBody(version, script),
-          scriptStatus: 'Staged',
-          stderrData: null,
-          stdoutData: null,
-        },
-        localRunWorkflow: {
-          scriptPath: path.join(segment, 'localRunWorkflow.sh'),
-          scriptBody: getLocalRunWorkflowBody(version, script),
-          scriptStatus: 'Staged',
-          stderrData: null,
-          stdoutData: null,
-        },
-        gridRunWorkflow: {
-          scriptPath: path.join(segment, 'gridRunWorkflow.sh'),
-          scriptBody: getGridRunWorkflowBody(version, script),
-          scriptStatus: 'Staged',
-          stderrData: null,
-          stdoutData: null,
-        },
+      form: {
+        ...form,
+        script,
+        title: form.title || `Simulation created on ${formatCurrentDate(currentDate)} at ${formatCurrentTime(currentDate)}`,
       },
+      scripts: { localRunWorkflow, gridRunWorkflow },
     }, { status: 200 });
   } catch {
     return NextResponse.json(null, { status: 500 });

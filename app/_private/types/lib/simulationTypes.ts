@@ -9,8 +9,7 @@ export type Simulation = {
   date: string,
   form: Form,
   scripts: {
-    localRunWorkflow: Script,
-    localCreateWorkflow: Script & { graphvizData: string | null },
+    localRunWorkflow: Script & { graphvizData: string | null },
     gridRunWorkflow: Script,
   }
 };
@@ -56,7 +55,7 @@ export type UpdateSimulation = (
 export type RunSimulationScript = (
   dispatch: React.Dispatch<UpdateSimulationAction>,
   simulation: Simulation,
-  script: 'localRunWorkflow' | 'localCreateWorkflow' | 'gridRunWorkflow'
+  script: 'localRunWorkflow' | 'gridRunWorkflow'
 ) => void;
 
 export type DeleteSimulation = (

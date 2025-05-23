@@ -5,7 +5,6 @@ import { Simulation } from '@/_private/types/lib/simulationTypes';
 
 export type ApiGridRunWorkflow = '/api/simulation/gridRunWorkflow';
 export type ApiLocalRunWorkflow = '/api/simulation/localRunWorkflow';
-export type ApiLocalCreateWorkflow = '/api/simulation/localCreateWorkflow';
 export type ApiSimulation = '/api/simulation/';
 
 // Other
@@ -54,4 +53,7 @@ export type LocalRunArgs = [
   '/bin/bash',
   '-c',
   string,
+] | [ // For demonstration
+  string, // Shell command
+  string, // Script path
 ];
