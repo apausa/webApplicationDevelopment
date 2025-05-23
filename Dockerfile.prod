@@ -11,7 +11,7 @@ RUN apk add --no-cache bash
 COPY package*.json ./
 
 # install dependencies
-RUN npm ci --only=production && npm cache clean --force
+RUN npm ci
 
 # copy code
 COPY . .
@@ -20,10 +20,13 @@ COPY . .
 RUN chmod +x app/_private/utils/submit.sh
 
 # build application
-RUN npm run next:build
+RUN npx next build
+
+# remove dev dependencies
+RUN npm prune --production
 
 # expose port
 EXPOSE 3000
 
 # start application
-CMD ["npm", "run", "next:start"] 
+CMD ["npx", "next", "start"] 

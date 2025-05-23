@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   production:
     build:
@@ -26,6 +24,4 @@ services:
       - ./configuredMethods:/app/configuredMethods # Mount generated scripts folder
     environment:
       - NODE_ENV=development
-      - DOCKER=true
-    profiles:
-      - dev 
+      - DOCKER=true 

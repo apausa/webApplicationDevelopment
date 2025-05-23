@@ -5,12 +5,7 @@
 ### Prerequisites
 - [Docker](https://docs.docker.com/get-docker/) installed on your system
 
-### Development environment
-```bash
-npm install
-```
-
-# Start development environment
+# Start development container
 ```bash
 npm run dev
 ```
@@ -19,11 +14,6 @@ npm run dev
 open http://localhost:3000
 
 ### Production environment
-
-# Build production images
-```bash
-npm run build
-```
 
 # Start production containers
 ```bash
