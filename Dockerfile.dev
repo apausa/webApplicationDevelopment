@@ -1,0 +1,26 @@
+# node.js image
+FROM node:18-alpine
+
+# working directory
+WORKDIR /app
+
+# install bash
+RUN apk add --no-cache bash git
+
+# copy files
+COPY package*.json ./
+
+# install dependencies
+RUN npm ci
+
+# copy code
+COPY . .
+
+# set permissions for submit.sh
+RUN chmod +x app/_private/utils/submit.sh
+
+# expose port
+EXPOSE 3000
+
+# start server
+CMD ["next", "dev"] 

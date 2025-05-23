@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  production:
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./configuredMethods:/app/configuredMethods # Mount generated scripts folder
+    environment:
+      - NODE_ENV=production
+      - DOCKER=true
+    restart: unless-stopped
+  development:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app # Mount project to container
+      - /app/node_modules # Exclude node_modules from mountin
+      - /app/.next # Exclude .next from mounting  
+      - ./configuredMethods:/app/configuredMethods # Mount generated scripts folder
+    environment:
+      - NODE_ENV=development
+      - DOCKER=true
+    profiles:
+      - dev 

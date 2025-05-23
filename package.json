@@ -3,13 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "predev": "chmod 755 ./configuredMethods && chmod +x ./app/_private/utils/submit.sh",
-    "prebuild": "chmod 755 ./configuredMethods && chmod +x ./app/_private/utils/submit.sh",
-    "prestart": "chmod 755 ./configuredMethods && chmod +x ./app/_private/utils/submit.sh",
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint --no-cache"
+    "dev": "docker-compose --profile dev up development",
+    "build": "docker-compose build",
+    "start": "docker-compose up production",
+    "stop": "docker-compose down",
+    "lint": "docker-compose exec development next lint --no-cache",
+    "test": "docker-compose exec development jest",
+    "next:build": "next build",
+    "next:start": "next start"
   },
   "dependencies": {
     "@nextui-org/react": "^2.1.0",
