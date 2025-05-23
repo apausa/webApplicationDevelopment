@@ -14,7 +14,7 @@ import {
   formatCurrentDate, formatCurrentTime, getScript, getSelectedVersion,
 } from '@/_private/utils/pages';
 import {
-  getLocalBodyCommented, getGridBodyCommented, getSegment,
+  getLocalBodyCommented, getGridBodyOriginal, getSegment,
 } from '@/_private/utils/api';
 
 // Constants
@@ -44,7 +44,7 @@ export async function POST(request: Request): Promise<PostSimulation> {
 
     const gridRunWorkflow = {
       scriptPath: path.join(absoluteSegment, 'gridRunWorkflow.sh'),
-      scriptBody: getGridBodyCommented(version, script),
+      scriptBody: getGridBodyOriginal(version, script),
       scriptStatus: 'Staged',
       stderrData: null,
       stdoutData: null,

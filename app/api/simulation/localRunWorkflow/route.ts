@@ -9,6 +9,7 @@ import { LocalRunArgs, PutSimulation } from '@/_private/types/api';
 import { getLocalArgs, getSegment, readFile } from '@/_private/utils/api';
 
 // Constants
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { APPTAINER_PATH, SCRIPTS_PATH } from '@/_private/lib/constants/apiConstants';
 
 export async function PUT(request: Request): Promise<PutSimulation> {
@@ -21,7 +22,13 @@ export async function PUT(request: Request): Promise<PutSimulation> {
 
     // Runs script
     const args: LocalRunArgs = getLocalArgs(segment, localRunWorkflow.scriptPath);
-    const childProcess: ChildProcess = spawn(APPTAINER_PATH, args);
+
+    // Line added for demonstration
+    const [command, ...commandArgs] = args;
+
+    // line 'spawn(APPTAINER_PATH, args)' modified for demonstration purposes
+    const childProcess: ChildProcess = spawn(command, commandArgs, { cwd: segment });
+
     const stderrData: string[] = [];
     const stdoutData: string[] = [];
 
