@@ -1,5 +1,5 @@
 // Types
-import { ApiGridRunWorkflow, ApiLocalCreateWorkflow, ApiLocalRunWorkflow } from '@/_private/types/api';
+import { ApiGridRunWorkflow, ApiLocalRunWorkflow } from '@/_private/types/api';
 import {
   Simulation,
   SimulationActionCreators,
@@ -8,7 +8,6 @@ import {
 // Constants
 export const API_GRID_RUN_WORKFLOW: ApiGridRunWorkflow = '/api/simulation/gridRunWorkflow';
 export const API_LOCAL_RUN_WORKFLOW: ApiLocalRunWorkflow = '/api/simulation/localRunWorkflow';
-export const API_LOCAL_CREATE_WORKFLOW: ApiLocalCreateWorkflow = '/api/simulation/localCreateWorkflow';
 
 const simulationActionCreators: SimulationActionCreators = {
   readAllSimulations: (dispatch) => {
@@ -42,17 +41,8 @@ const simulationActionCreators: SimulationActionCreators = {
   },
 
   runSimulationScript: async (dispatch, simulation, script) => {
-    const getRoute = () => {
-      switch (script) {
-        case 'localRunWorkflow': return API_LOCAL_RUN_WORKFLOW;
-        case 'localCreateWorkflow': return API_LOCAL_CREATE_WORKFLOW;
-        case 'gridRunWorkflow': return API_GRID_RUN_WORKFLOW;
-        default: return '';
-      }
-    };
-
     const unresolvedSimulation: Response = await fetch(
-      getRoute(),
+      (script === 'localRunWorkflow') ? API_LOCAL_RUN_WORKFLOW : API_GRID_RUN_WORKFLOW,
       { method: 'PUT', body: JSON.stringify(simulation) },
     );
 

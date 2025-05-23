@@ -87,6 +87,7 @@ export default function SimulationTab(
       <Button
         className="my-2"
         as={Link}
+        isDisabled={scriptStatus !== 'Completed'}
         href={`/simulation/${id}/graphviz`}
         target="_blank"
       >
