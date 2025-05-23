@@ -47,13 +47,7 @@ const getLocalBodyOriginal = (version: string, script: string): string => ([
   `${script} --visualize-workflow`,
 ].join('\n\n'));
 
-const getGridBodyOriginal = (version: string, script: string): string => ([
-  `#JDL_PACKAGE=O2sim::${version}`,
-  '#JDL_OUTPUT=*.root@disk=1,*.log@disk=1',
-  script,
-].join('\n\n'));
-
-export const MOCK_WORKFLOW = `digraph mygraph {
+const MOCK_WORKFLOW = `digraph mygraph {
   fontname="Helvetica,Arial,sans-serif"
   node [fontname="Helvetica,Arial,sans-serif"]
   edge [fontname="Helvetica,Arial,sans-serif"]
@@ -83,25 +77,22 @@ export const MOCK_WORKFLOW = `digraph mygraph {
   "//absl/strings:strings"
 }`;
 
+export const getGridBodyOriginal = (version: string, script: string): string => ([
+  `#JDL_PACKAGE=O2sim::${version}`,
+  '#JDL_OUTPUT=*.root@disk=1,*.log@disk=1',
+  script,
+].join('\n\n'));
+
 export const getLocalBodyCommented = (version: string, script: string): string => ([
   '#!/bin/bash',
   '',
   'sleep 10',
   '',
-  'cat > graphviz.sh << \'EOF\'',
+  'cat > workflow.gv << \'EOF\'',
   MOCK_WORKFLOW,
   'EOF',
-  'chmod +x graphviz.sh',
+  'chmod +x workflow.gv',
   '',
   '# ORIGINAL CONTENT (COMMENTED OUT FOR DEMONSTRATION):',
   `# ${getLocalBodyOriginal(version, script).replace(/\n\s*/g, ' ')}`,
-].join('\n'));
-
-export const getGridBodyCommented = (version: string, script: string): string => ([
-  '#!/bin/bash',
-  '',
-  'sleep 10',
-  '',
-  '# ORIGINAL CONTENT (COMMENTED OUT FOR DEMONSTRATION):',
-  `# ${getGridBodyOriginal(version, script).replace(/\n\s*/g, ' ')}`,
 ].join('\n'));
