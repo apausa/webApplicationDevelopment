@@ -86,6 +86,9 @@ export const getGridBodyOriginal = (version: string, script: string): string => 
 export const getLocalBodyCommented = (version: string, script: string): string => ([
   '#!/bin/bash',
   '',
+  '# ORIGINAL CONTENT (COMMENTED OUT FOR DEMONSTRATION):',
+  `# ${getLocalBodyOriginal(version, script).replace(/\n\s*/g, ' ')}`,
+  '',
   'sleep 10',
   '',
   'cat > workflow.gv << \'EOF\'',
@@ -93,6 +96,4 @@ export const getLocalBodyCommented = (version: string, script: string): string =
   'EOF',
   'chmod +x workflow.gv',
   '',
-  '# ORIGINAL CONTENT (COMMENTED OUT FOR DEMONSTRATION):',
-  `# ${getLocalBodyOriginal(version, script).replace(/\n\s*/g, ' ')}`,
 ].join('\n'));
