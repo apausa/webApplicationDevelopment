@@ -53,4 +53,7 @@ export type LocalRunArgs = [
   '/bin/bash',
   '-c',
   string,
+] | [ // For demonstration
+  string, // Shell command
+  string, // Script path
 ];
