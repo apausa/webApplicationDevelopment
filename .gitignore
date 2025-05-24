@@ -32,3 +32,6 @@ next-env.d.ts
 # ide files
 .vscode/
 .idea/
+
+#swc
+.swc/
