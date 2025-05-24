@@ -11,7 +11,7 @@ import {
   mockSimulation1,
   mockSimulation2,
   setupTestEnvironment,
-} from '../../../../mocks/dataMocks';
+} from '../../../../mocks';
 
 // Types
 import { Status } from '../../../../../app/_private/types/utils';

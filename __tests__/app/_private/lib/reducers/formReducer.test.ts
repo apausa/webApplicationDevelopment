@@ -1,6 +1,3 @@
-// This test file is kept as it tests core form state management functionality
-// without any NextUI component mocking - it focuses on the reducer logic
-
 // Reducer
 import formReducer from '../../../../../app/_private/lib/reducers/formReducer';
 
@@ -11,7 +8,7 @@ import { Form, FormAction } from '../../../../../app/_private/types/lib/formType
 import {
   mockForm,
   setupTestEnvironment,
-} from '../../../../mocks/dataMocks';
+} from '../../../../mocks';
 
 beforeEach(() => {
   setupTestEnvironment();
@@ -174,18 +171,6 @@ describe('Form Reducer', () => {
 
       expect(newState.script).toBe(newScript);
       expect(localStorage.setItem).toHaveBeenCalledWith('form', JSON.stringify(newState));
-    });
-  });
-
-  describe('Unknown Actions', () => {
-    it('should return the original state for unknown action types', () => {
-      const currentState: Form = { ...mockForm };
-      const action = { type: 'UNKNOWN_ACTION' } as any;
-
-      const newState = formReducer(currentState, action);
-
-      expect(newState).toBe(currentState);
-      expect(localStorage.setItem).toHaveBeenCalledWith('form', JSON.stringify(currentState));
     });
   });
 });

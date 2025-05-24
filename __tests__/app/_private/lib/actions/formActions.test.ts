@@ -9,7 +9,7 @@ import {
   mockDispatch,
   mockForm,
   setupTestEnvironment,
-} from '../../../../mocks/dataMocks';
+} from '../../../../mocks';
 
 beforeEach(() => {
   setupTestEnvironment();

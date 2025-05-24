@@ -6,7 +6,7 @@ import {
   mockDispatch,
   mockSortDescriptor,
   setupTestEnvironment,
-} from '../../../../mocks/dataMocks';
+} from '../../../../mocks';
 
 beforeEach(() => {
   setupTestEnvironment();

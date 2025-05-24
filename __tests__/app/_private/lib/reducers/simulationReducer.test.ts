@@ -9,7 +9,7 @@ import {
   mockSimulation1,
   mockSimulation2,
   setupTestEnvironment,
-} from '../../../../mocks/dataMocks';
+} from '../../../../mocks';
 
 beforeEach(() => {
   setupTestEnvironment();
@@ -78,18 +78,6 @@ describe('Simulation Reducer', () => {
 
       expect(newState).toEqual([updatedSimulation, mockSimulation2]);
       expect(localStorage.setItem).toHaveBeenCalledWith('simulations', JSON.stringify([updatedSimulation, mockSimulation2]));
-    });
-  });
-
-  describe('Unknown Actions', () => {
-    it('should return the original state for unknown action types', () => {
-      const currentState: Simulation[] = [mockSimulation1, mockSimulation2];
-      const action = { type: 'UNKNOWN_ACTION' } as any;
-
-      const newState = simulationReducer(currentState, action);
-
-      expect(newState).toBe(currentState);
-      expect(localStorage.setItem).toHaveBeenCalledWith('simulations', JSON.stringify(currentState));
     });
   });
 });

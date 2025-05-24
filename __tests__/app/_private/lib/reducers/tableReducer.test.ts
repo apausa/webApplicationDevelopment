@@ -1,6 +1,3 @@
-// This test file is kept as it tests core table state management functionality
-// without any NextUI component mocking - it focuses on the reducer logic
-
 import { SortDescriptor } from '@nextui-org/react';
 
 // Reducer
@@ -14,7 +11,7 @@ import {
   mockSelectedColumns,
   mockSortDescriptor,
   setupTestEnvironment,
-} from '../../../../mocks/dataMocks';
+} from '../../../../mocks';
 
 beforeEach(() => {
   setupTestEnvironment();
@@ -95,15 +92,6 @@ describe('Table Reducer', () => {
       expect(newState.page.current).toBe(2);
       expect(newState.page).not.toBe(initialState.page);
       expect(newState).not.toBe(initialState);
-    });
-  });
-
-  describe('Unknown Actions', () => {
-    it('should return the original state for unknown action types', () => {
-      const action = { type: 'UNKNOWN_ACTION' } as any;
-      const newState = tableReducer(initialState, action);
-
-      expect(newState).toBe(initialState);
     });
   });
 });

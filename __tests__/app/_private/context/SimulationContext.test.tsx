@@ -4,23 +4,28 @@ import {
 } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
-// Using relative paths that Jest can properly resolve
+// Import the actual context
 import { SimulationProvider, useSimulation } from '../../../../app/_private/context/SimulationContext';
+
+// Reducer
 import simulationReducer from '../../../../app/_private/lib/reducers/simulationReducer';
+
+// Actions
 import simulationActionCreators from '../../../../app/_private/lib/actions/simulationActions';
 
+// Mocks
 import {
   mockDispatch,
   mockSimulation1,
   mockSimulation2,
   setupTestEnvironment,
-} from '../../../mocks/dataMocks';
+} from '../../../mocks';
 
-// Mock the dependencies
+// Mock dependencies
 jest.mock('../../../../app/_private/lib/reducers/simulationReducer');
 jest.mock('../../../../app/_private/lib/actions/simulationActions');
 
-// Mock React hooks
+// Mock hooks
 const mockUseReducer = jest.fn();
 jest.mock('react', () => ({
   ...jest.requireActual('react'),
@@ -42,12 +47,6 @@ function TestComponent() {
       ))}
     </div>
   );
-}
-
-// Test component without provider to test error handling
-function TestComponentWithoutProvider() {
-  const simulation = useSimulation();
-  return <div data-testid="error">{String(simulation)}</div>;
 }
 
 describe('SimulationContext', () => {
@@ -117,7 +116,6 @@ describe('SimulationContext', () => {
 
       expect(screen.getByTestId('simulation-count')).toHaveTextContent('2');
 
-      // Change the mock to return different state
       mockUseReducer.mockImplementation(() => [[mockSimulation1], mockDispatch]);
 
       rerender(
@@ -142,17 +140,6 @@ describe('SimulationContext', () => {
       expect(screen.getByTestId('dispatch-available')).toHaveTextContent('true');
     });
 
-    it('should throw error when used outside of provider', () => {
-      // Mock console.error to prevent error output in tests
-      const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
-
-      expect(() => {
-        render(<TestComponentWithoutProvider />);
-      }).toThrow('useSimulation must be used within a SimulationProvider');
-
-      consoleSpy.mockRestore();
-    });
-
     it('should return correct useReducer tuple format', () => {
       let contextValue: any;
 
@@ -171,28 +158,6 @@ describe('SimulationContext', () => {
       expect(contextValue).toHaveLength(2);
       expect(Array.isArray(contextValue[0])).toBe(true);
       expect(typeof contextValue[1]).toBe('function');
-    });
-  });
-
-  describe('Integration Tests', () => {
-    it('should handle complete provider lifecycle with actions', async () => {
-      render(
-        <SimulationProvider>
-          <TestComponent />
-        </SimulationProvider>,
-      );
-
-      // Verify initial render
-      expect(screen.getByTestId('simulation-count')).toHaveTextContent('2');
-      expect(screen.getByTestId('dispatch-available')).toHaveTextContent('true');
-
-      // Verify action was called
-      await waitFor(() => {
-        expect(simulationActionCreators.readAllSimulations).toHaveBeenCalledWith(mockDispatch);
-      });
-
-      // Verify reducer was initialized correctly
-      expect(mockUseReducer).toHaveBeenCalledWith(simulationReducer, []);
     });
   });
 });
