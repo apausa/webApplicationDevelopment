@@ -1,3 +1,6 @@
+// This test file is kept as it tests core table state management functionality
+// without any NextUI component mocking - it focuses on the reducer logic
+
 import { SortDescriptor } from '@nextui-org/react';
 
 // Reducer
@@ -17,7 +20,7 @@ beforeEach(() => {
   setupTestEnvironment();
 });
 
-describe('tableReducer', () => {
+describe('Table Reducer', () => {
   const initialState: TableType = {
     selectedColumns: mockSelectedColumns,
     selectedKey: 'Title',
@@ -32,67 +35,75 @@ describe('tableReducer', () => {
     sortDescriptor: mockSortDescriptor,
   };
 
-  it('should update selected key', () => {
-    const action = { type: 'UPDATE_SELECTED_KEY', key: 'Options' } as const;
-    const newState = tableReducer(initialState, action);
+  describe('Table Configuration Updates', () => {
+    it('should update selected key for column selection', () => {
+      const action = { type: 'UPDATE_SELECTED_KEY', key: 'Options' } as const;
+      const newState = tableReducer(initialState, action);
 
-    expect(newState.selectedKey).toBe('Options');
-    expect(newState).not.toBe(initialState);
+      expect(newState.selectedKey).toBe('Options');
+      expect(newState).not.toBe(initialState);
+    });
+
+    it('should update sort descriptor for table ordering', () => {
+      const newSortDescriptor: SortDescriptor = {
+        column: 'date',
+        direction: 'descending',
+      };
+      const action = { type: 'UPDATE_SORT_DESCRIPTOR', sortDescriptor: newSortDescriptor } as const;
+      const newState = tableReducer(initialState, action);
+
+      expect(newState.sortDescriptor).toBe(newSortDescriptor);
+      expect(newState).not.toBe(initialState);
+    });
   });
 
-  it('should update sort descriptor', () => {
-    const newSortDescriptor: SortDescriptor = {
-      column: 'date',
-      direction: 'descending',
-    };
-    const action = { type: 'UPDATE_SORT_DESCRIPTOR', sortDescriptor: newSortDescriptor } as const;
-    const newState = tableReducer(initialState, action);
+  describe('Table Filtering', () => {
+    it('should update filter query for search functionality', () => {
+      const action = { type: 'UPDATE_FILTER_QUERY', query: 'test query' } as const;
+      const newState = tableReducer(initialState, action);
 
-    expect(newState.sortDescriptor).toBe(newSortDescriptor);
-    expect(newState).not.toBe(initialState);
+      expect(newState.filter.query).toBe('test query');
+      expect(newState.filter).not.toBe(initialState.filter);
+      expect(newState).not.toBe(initialState);
+    });
+
+    it('should update filter status for status-based filtering', () => {
+      const newStatus = new Set(['completed', 'running']);
+      const action = { type: 'UPDATE_FILTER_STATUS', status: newStatus } as const;
+      const newState = tableReducer(initialState, action);
+
+      expect(newState.filter.status).toBe(newStatus);
+      expect(newState.filter).not.toBe(initialState.filter);
+      expect(newState).not.toBe(initialState);
+    });
   });
 
-  it('should update filter query', () => {
-    const action = { type: 'UPDATE_FILTER_QUERY', query: 'test query' } as const;
-    const newState = tableReducer(initialState, action);
+  describe('Table Pagination', () => {
+    it('should update page rows for pagination size', () => {
+      const action = { type: 'UPDATE_PAGE_ROWS', rows: 20 } as const;
+      const newState = tableReducer(initialState, action);
 
-    expect(newState.filter.query).toBe('test query');
-    expect(newState.filter).not.toBe(initialState.filter);
-    expect(newState).not.toBe(initialState);
+      expect(newState.page.rows).toBe(20);
+      expect(newState.page).not.toBe(initialState.page);
+      expect(newState).not.toBe(initialState);
+    });
+
+    it('should update current page for pagination navigation', () => {
+      const action = { type: 'UPDATE_PAGE_CURRENT', page: 2 } as const;
+      const newState = tableReducer(initialState, action);
+
+      expect(newState.page.current).toBe(2);
+      expect(newState.page).not.toBe(initialState.page);
+      expect(newState).not.toBe(initialState);
+    });
   });
 
-  it('should update filter status', () => {
-    const newStatus = new Set(['completed', 'running']);
-    const action = { type: 'UPDATE_FILTER_STATUS', status: newStatus } as const;
-    const newState = tableReducer(initialState, action);
+  describe('Unknown Actions', () => {
+    it('should return the original state for unknown action types', () => {
+      const action = { type: 'UNKNOWN_ACTION' } as any;
+      const newState = tableReducer(initialState, action);
 
-    expect(newState.filter.status).toBe(newStatus);
-    expect(newState.filter).not.toBe(initialState.filter);
-    expect(newState).not.toBe(initialState);
-  });
-
-  it('should update page rows', () => {
-    const action = { type: 'UPDATE_PAGE_ROWS', rows: 20 } as const;
-    const newState = tableReducer(initialState, action);
-
-    expect(newState.page.rows).toBe(20);
-    expect(newState.page).not.toBe(initialState.page);
-    expect(newState).not.toBe(initialState);
-  });
-
-  it('should update page current', () => {
-    const action = { type: 'UPDATE_PAGE_CURRENT', page: 2 } as const;
-    const newState = tableReducer(initialState, action);
-
-    expect(newState.page.current).toBe(2);
-    expect(newState.page).not.toBe(initialState.page);
-    expect(newState).not.toBe(initialState);
-  });
-
-  it('should return the original state for unknown action types', () => {
-    const action = { type: 'UNKNOWN_ACTION' } as any;
-    const newState = tableReducer(initialState, action);
-
-    expect(newState).toBe(initialState);
+      expect(newState).toBe(initialState);
+    });
   });
 });

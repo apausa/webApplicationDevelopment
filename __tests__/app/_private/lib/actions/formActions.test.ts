@@ -15,143 +15,151 @@ beforeEach(() => {
   setupTestEnvironment();
 });
 
-describe('formActionCreators', () => {
-  it('should create readForm action with data from localStorage', () => {
-    const testForm = { ...mockForm, title: 'Test Form' };
-    jest.spyOn(Storage.prototype, 'getItem').mockReturnValue(JSON.stringify(testForm));
+describe('Form Actions', () => {
+  describe('CRUD Operations', () => {
+    it('should read form data from localStorage', () => {
+      const testForm = { ...mockForm, title: 'Test Form' };
+      jest.spyOn(Storage.prototype, 'getItem').mockReturnValue(JSON.stringify(testForm));
 
-    formActionCreators.readForm(mockDispatch);
+      formActionCreators.readForm(mockDispatch);
 
-    expect(localStorage.getItem).toHaveBeenCalledWith('form');
-    expect(mockDispatch).toHaveBeenCalledWith({
-      type: 'READ_FORM',
-      form: testForm,
+      expect(localStorage.getItem).toHaveBeenCalledWith('form');
+      expect(mockDispatch).toHaveBeenCalledWith({
+        type: 'READ_FORM',
+        form: testForm,
+      });
+    });
+
+    it('should use initial form when localStorage is empty', () => {
+      jest.spyOn(Storage.prototype, 'getItem').mockReturnValue(null);
+
+      formActionCreators.readForm(mockDispatch);
+
+      expect(localStorage.getItem).toHaveBeenCalledWith('form');
+      expect(mockDispatch).toHaveBeenCalledWith({
+        type: 'READ_FORM',
+        form: INITIAL_FORM,
+      });
+    });
+
+    it('should create a form', () => {
+      const testForm = { ...mockForm, title: 'New Form' };
+
+      formActionCreators.createForm(mockDispatch, testForm);
+
+      expect(mockDispatch).toHaveBeenCalledWith({
+        type: 'CREATE_FORM',
+        form: testForm,
+      });
     });
   });
 
-  it('should create readForm action with INITIAL_FORM when localStorage is empty', () => {
-    jest.spyOn(Storage.prototype, 'getItem').mockReturnValue(null);
+  describe('Build Command', () => {
+    it('should update build command selected arguments', () => {
+      const values = ['--arg1', '--arg2'];
 
-    formActionCreators.readForm(mockDispatch);
+      formActionCreators.updateBuildCmdSelected(mockDispatch, values);
 
-    expect(localStorage.getItem).toHaveBeenCalledWith('form');
-    expect(mockDispatch).toHaveBeenCalledWith({
-      type: 'READ_FORM',
-      form: INITIAL_FORM,
+      expect(mockDispatch).toHaveBeenCalledWith({
+        type: 'UPDATE_BUILD_CMD_SELECTED',
+        values,
+      });
+    });
+
+    it('should update build command argument values', () => {
+      const value = '100';
+      const name = '--threads';
+
+      formActionCreators.updateBuildCmdValue(mockDispatch, value, name);
+
+      expect(mockDispatch).toHaveBeenCalledWith({
+        type: 'UPDATE_BUILD_CMD_VALUE',
+        value,
+        name,
+      });
     });
   });
 
-  it('should create createForm action', () => {
-    const testForm = { ...mockForm, title: 'New Form' };
+  describe('Run Command', () => {
+    it('should update run command selected arguments', () => {
+      const values = ['--run-arg1', '--run-arg2'];
 
-    formActionCreators.createForm(mockDispatch, testForm);
+      formActionCreators.updateRunCmdSelected(mockDispatch, values);
 
-    expect(mockDispatch).toHaveBeenCalledWith({
-      type: 'CREATE_FORM',
-      form: testForm,
+      expect(mockDispatch).toHaveBeenCalledWith({
+        type: 'UPDATE_RUN_CMD_SELECTED',
+        values,
+      });
+    });
+
+    it('should update run command argument values', () => {
+      const value = 'test-value';
+      const name = '--config';
+
+      formActionCreators.updateRunCmdValue(mockDispatch, value, name);
+
+      expect(mockDispatch).toHaveBeenCalledWith({
+        type: 'UPDATE_RUN_CMD_VALUE',
+        value,
+        name,
+      });
     });
   });
 
-  it('should create updateBuildCmdSelected action', () => {
-    const values = ['--arg1', '--arg2'];
+  describe('Form Field', () => {
+    it('should update form version', () => {
+      const version = '2.0.0';
 
-    formActionCreators.updateBuildCmdSelected(mockDispatch, values);
+      formActionCreators.updateFormVersion(mockDispatch, version);
 
-    expect(mockDispatch).toHaveBeenCalledWith({
-      type: 'UPDATE_BUILD_CMD_SELECTED',
-      values,
+      expect(mockDispatch).toHaveBeenCalledWith({
+        type: 'UPDATE_FORM_VERSION',
+        version,
+      });
     });
-  });
 
-  it('should create updateBuildCmdValue action', () => {
-    const value = '100';
-    const name = '--threads';
+    it('should update form title', () => {
+      const title = 'New Title';
 
-    formActionCreators.updateBuildCmdValue(mockDispatch, value, name);
+      formActionCreators.updateFormTitle(mockDispatch, title);
 
-    expect(mockDispatch).toHaveBeenCalledWith({
-      type: 'UPDATE_BUILD_CMD_VALUE',
-      value,
-      name,
+      expect(mockDispatch).toHaveBeenCalledWith({
+        type: 'UPDATE_FORM_TITLE',
+        title,
+      });
     });
-  });
 
-  it('should create updateRunCmdSelected action', () => {
-    const values = ['--run-arg1', '--run-arg2'];
+    it('should update form subjobs', () => {
+      const subjobs = '5';
 
-    formActionCreators.updateRunCmdSelected(mockDispatch, values);
+      formActionCreators.updateFormSubjobs(mockDispatch, subjobs);
 
-    expect(mockDispatch).toHaveBeenCalledWith({
-      type: 'UPDATE_RUN_CMD_SELECTED',
-      values,
+      expect(mockDispatch).toHaveBeenCalledWith({
+        type: 'UPDATE_FORM_SUBJOBS',
+        subjobs,
+      });
     });
-  });
 
-  it('should create updateRunCmdValue action', () => {
-    const value = 'test-value';
-    const name = '--config';
+    it('should update form mode', () => {
+      const advanced = true;
 
-    formActionCreators.updateRunCmdValue(mockDispatch, value, name);
+      formActionCreators.updateFormAdvanced(mockDispatch, advanced);
 
-    expect(mockDispatch).toHaveBeenCalledWith({
-      type: 'UPDATE_RUN_CMD_VALUE',
-      value,
-      name,
+      expect(mockDispatch).toHaveBeenCalledWith({
+        type: 'UPDATE_FORM_ADVANCED',
+        advanced,
+      });
     });
-  });
 
-  it('should create updateFormVersion action', () => {
-    const version = '2.0.0';
+    it('should update form content', () => {
+      const script = 'console.log("test")';
 
-    formActionCreators.updateFormVersion(mockDispatch, version);
+      formActionCreators.updateFormScript(mockDispatch, script);
 
-    expect(mockDispatch).toHaveBeenCalledWith({
-      type: 'UPDATE_FORM_VERSION',
-      version,
-    });
-  });
-
-  it('should create updateFormTitle action', () => {
-    const title = 'New Title';
-
-    formActionCreators.updateFormTitle(mockDispatch, title);
-
-    expect(mockDispatch).toHaveBeenCalledWith({
-      type: 'UPDATE_FORM_TITLE',
-      title,
-    });
-  });
-
-  it('should create updateFormSubjobs action', () => {
-    const subjobs = '5';
-
-    formActionCreators.updateFormSubjobs(mockDispatch, subjobs);
-
-    expect(mockDispatch).toHaveBeenCalledWith({
-      type: 'UPDATE_FORM_SUBJOBS',
-      subjobs,
-    });
-  });
-
-  it('should create updateFormAdvanced action', () => {
-    const advanced = true;
-
-    formActionCreators.updateFormAdvanced(mockDispatch, advanced);
-
-    expect(mockDispatch).toHaveBeenCalledWith({
-      type: 'UPDATE_FORM_ADVANCED',
-      advanced,
-    });
-  });
-
-  it('should create updateFormScript action', () => {
-    const script = 'console.log("test")';
-
-    formActionCreators.updateFormScript(mockDispatch, script);
-
-    expect(mockDispatch).toHaveBeenCalledWith({
-      type: 'UPDATE_FORM_SCRIPT',
-      script,
+      expect(mockDispatch).toHaveBeenCalledWith({
+        type: 'UPDATE_FORM_SCRIPT',
+        script,
+      });
     });
   });
 });
