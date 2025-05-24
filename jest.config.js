@@ -16,9 +16,6 @@ const customJestConfig = {
   testMatch: ['**/__tests__/**/*.test.(js|jsx|ts|tsx)'],
   collectCoverage: true,
   coverageDirectory: 'coverage',
-  collectCoverageFrom: [
-    'app/**/*.{js,jsx,ts,tsx}'
-  ],
 };
 
 // createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async

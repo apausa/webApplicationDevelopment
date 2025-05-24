@@ -3,11 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "docker-compose up development",
-    "start": "docker-compose up production",
-    "stop": "docker-compose down",
-    "lint": "docker-compose exec development npx next lint --no-cache",
-    "test": "docker-compose exec development npx jest --coverage"
+    "dev": "docker-compose -f docker/docker-compose.yml up development",
+    "start": "docker-compose -f docker/docker-compose.yml up production",
+    "stop": "docker-compose -f docker/docker-compose.yml down",
+    "lint": "docker-compose -f docker/docker-compose.yml exec development npx next lint --no-cache",
+    "test": "docker-compose -f docker/docker-compose.yml exec development npx jest"
   },
   "dependencies": {
     "@nextui-org/react": "^2.1.0",
