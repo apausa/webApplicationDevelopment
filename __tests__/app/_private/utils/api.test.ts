@@ -26,10 +26,8 @@ describe('API Utils', () => {
   beforeEach(() => {
     setupTestEnvironment();
 
-    // Reset all mocks
     jest.clearAllMocks();
 
-    // Setup default mock implementations
     mockPath.join.mockImplementation((...paths: string[]) => paths.join('/'));
     mockFs.readFile.mockResolvedValue('mock file content');
     mockFs.access.mockResolvedValue(undefined);

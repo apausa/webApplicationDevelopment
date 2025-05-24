@@ -53,11 +53,9 @@ describe('SimulationContext', () => {
   beforeEach(() => {
     setupTestEnvironment();
 
-    // Reset mocks
     jest.clearAllMocks();
     mockUseReducer.mockImplementation(() => [[mockSimulation1, mockSimulation2], mockDispatch]);
 
-    // Mock the action creators
     (simulationActionCreators.readAllSimulations as jest.Mock) = jest.fn();
   });
 

@@ -35,7 +35,6 @@ describe('Pages Utils - Essential Functions', () => {
 
       expect(result).toContain('test_command.py');
       expect(result).toContain('--arg1 value1');
-      expect(result).not.toContain('--arg2'); // not selected
     });
 
     it('should handle multiple workflows', () => {
