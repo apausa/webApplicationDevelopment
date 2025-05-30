@@ -70,20 +70,20 @@ npm run test
 ## Languages and technologies justification
 
 **Programming languages**
-- TypeScript: strongly typed JavaScript for code maintainability and error reduction
-- Bash: Native scripting language for simulation library integration
+- **TypeScript**: strongly typed JavaScript for code maintainability and error reduction
+- **Bash**: Native scripting language for simulation library integration
 
 **Frontend Stack:**
-- Next.js: React framework with advanced routing and optimized performance
-- Node.js: JavaScript runtime for server-side rendering and API functionality
-- Tailwind CSS: utility-first CSS framework for rapid styling
-- NextUI: modern component library with seamless Next.js integration
-- UUID: unique identifier generation for system operations
-- D3-graphviz: visualization library for rendering DOT notation graphs
-- Git: industry-standard version control with branching capabilities
-- ESLint: static code analysis tool with Airbnb configuration for code quality
-- Docker: containerization platform for consistent development environments
-- Jest: JavaScript testing framework with comprehensive testing capabilities
+- **Next.js**: React framework with advanced routing and optimized performance
+- **Node.js**: JavaScript runtime for server-side rendering and API functionality
+- **Tailwind CSS**: utility-first CSS framework for rapid styling
+- **NextUI**: modern component library with seamless Next.js integration
+- **UUID**: unique identifier generation for system operations
+- **D3-graphviz**: visualization library for rendering DOT notation graphs
+- **Git**: industry-standard version control with branching capabilities
+- **ESLint**: static code analysis tool with Airbnb configuration for code quality
+- **Docker**: containerization platform for consistent development environments
+- **Jest**: JavaScript testing framework with comprehensive testing capabilities
 
 ## Structure of the project
 
