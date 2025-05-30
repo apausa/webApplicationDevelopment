@@ -1,6 +1,6 @@
 # Particle Physics Simulations Dashboard
 
-![Dashboard Screenshot](https://www.overleaf.com/project/67c4a2103f9e65851b9fb3d1/blob/dce6b53e646cca56fd8c0bc8a06515edaf2b0a78?fallback=6821043b69213557e5efb7a5)
+[![Dashboard Screenshot](https://i.postimg.cc/bv5VHdX9/screenshot.png)](https://postimg.cc/5Hwmf42X)
 
 A locally hosted web application for ALICE researchers at CERN to manage Monte Carlo methods.
 This functional prototype is built from scratch with the TypeScript language and Next.js framework to address the features below. 
