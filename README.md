@@ -1,6 +1,6 @@
 # Particle Physics Simulations Dashboard
 
-[ADD IMAGE]
+![Dashboard Screenshot](https://www.overleaf.com/project/67c4a2103f9e65851b9fb3d1/blob/dce6b53e646cca56fd8c0bc8a06515edaf2b0a78?fallback=6821043b69213557e5efb7a5)
 
 A locally hosted web application for ALICE researchers at CERN to manage Monte Carlo methods.
 This functional prototype is built from scratch with the TypeScript language and Next.js framework to address the features below. 
@@ -18,7 +18,7 @@ Before running this project:
 - make sure to have installed [Docker](https://docs.docker.com/get-docker/)
 - and check check that it is running,
 
-Note: Docker already implements Node.js to ensure a consistent environment across different systems. 
+Docker already implements Node.js to ensure a consistent environment across different systems. 
 
 ### 1. Clone and Setup
 
@@ -40,7 +40,7 @@ npm run dev
 npm run start
 ```
 
-Note: Docker already install the dependencies of the project. 
+Docker already installs the dependencies of the project. 
 
 ### 3. Access the Application
 
