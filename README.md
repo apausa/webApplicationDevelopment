@@ -16,7 +16,7 @@ The main goal is to integrate the different stages of Monte Carlo simulations ma
 
 Before running this project:
 - make sure to have installed [Docker](https://docs.docker.com/get-docker/)
-- and check check that it is running,
+- and check that it is running. 
 
 Docker already implements Node.js to ensure a consistent environment across different systems. 
 
@@ -32,6 +32,7 @@ cd webApplicationDevelopment
 
 **Development Mode**
 ```bash
+npm install
 npm run dev
 ```
 
