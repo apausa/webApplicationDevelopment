@@ -1,5 +1,5 @@
 # node.js image
-FROM node:18-alpine
+FROM node:slim
 
 # working directory
 WORKDIR /app
